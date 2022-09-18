@@ -29,22 +29,27 @@ public class AgeCalculatorServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String age = request.getParameter("age");
+        boolean letter = false;
+        for(int i =0;i<age.length();i++)
+        {
+            if(Character.isLetter(age.charAt(i)))
+            {
+                letter=true;
+            }
+        }
         
-        
-        if(age==null || age =="")
+        if(age==null || age =="" || letter)
         {
             request.setAttribute("message", "You must give your current age!<br>");
             
         }
-        else if(Integer.parseInt(age)>=0)
+        else
         {
             String result = "Your age next birthday will be "+(Integer.parseInt(age)+1+"<br>");
             request.setAttribute("message",result);
         }
-        else
-        {
-            request.setAttribute("message", "You must give your current age!<br>");
-        }
+       
+    
         
         getServletContext().getRequestDispatcher("/WEB-INF/agecalculator.jsp")
                 .forward(request,response);
